@@ -27,7 +27,7 @@ def getbeschl(PRx,PRy,PMx,PMy):
 	elif (rEX==0):
 		betaREF = 0
 	else:
-		betaREF=math.tan(rEX/rEY) #############################################################################rEY division durch 0
+		betaREF=math.tan(rEX/rEY)
 	
 	alphaMER= math.pi/2-betaREF #Pi halbe oder ganz pi??????
 	FEx = math.cos(alphaMER)*FER
@@ -105,6 +105,7 @@ if (winkelv0==0):
 else:
 	vx[0] = v0*math.cos(winkelv0)
 	vy[0] = v0*math.sin(winkelv0)
+
 #Bestimmung des Startpunktes durch Radius der Erde und winkelv0
 if (winkelv0==0):
 	PRx[0]=rE
@@ -126,7 +127,7 @@ for i in range(1,n,1):
 	#k berechnet x 
 	#l berechnet v
 	#kräfte bei zwischenschritten als Unterprogramm
-	####################################################################################################################################################################
+	
 	kx1 = vx[i-1]
 	lx1 = aRx[i-1]
 	ky1 = vy[i-1]
@@ -152,7 +153,7 @@ for i in range(1,n,1):
 	PRy[i] = PRy[i-1]+ h/6 * (ky1 + 2 * ky2 + 2* ky3 + ky4)
 	vx[i] = vx[i-1]+ ((h/6) * (lx1 + 2 * lx2 + 2* lx3 + lx4))
 	vy[i] = vy[i-1]+ ((h/6) * (ly1 + 2 * ly2 + 2* ly3 + ly4))
-#	aR[i-1],aRx[i-1],aRy[i-1],FRES[i-1],FRx[i-1],FRy[i-1],rER,rMR = getbeschl(PR[i-1])
+	aR,aRx[i-1],aRy[i-1],FRES[i-1],FRx[i-1],FRy[i-1],rER,rMR = getbeschl(PRx[i-1],PRy[i-1],PMx,PMy)
 	
 	print("DURCHGANG NUMMER: ", i)
 	#if (rER<=rE-1):
