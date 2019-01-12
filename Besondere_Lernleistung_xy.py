@@ -55,6 +55,7 @@ def getbeschl(PRx,PRy,PMx,PMy):
 	FRES=math.sqrt((FMR**2)+(FER**2)-2*FMR*FER*math.cos(gammacoss))
 	#FRES Zerlegung
 	alphaRES=math.asin((FMR*math.sin(alphaRME))/FRES)
+	print ("ALPHARES = "+str(alphaRES))
 	
 	FRx = FRES * math.cos(alphaRES)
 	FRy = FRES * math.sin(alphaRES)
@@ -96,23 +97,30 @@ PMy=0
 print("Startgeschwindigkeit: ")
 v0=int(input()) #Startgeschwindigkeit
 print("Startrichtung (in Grad --> 0° = x-Achse): ")
-winkelv0 = int(input()) #Winkel der Startgeschwindigkeit
+winkelv0GRAD = int(input()) #Winkel der Startgeschwindigkeit
+ #Winkelv0 wird in Grad eingegeben --> Python rechnet aber mit Bogenmaß --> 360 grad so oft abziehen bis winkel <=360 --> Umwandlung in Bogenmaß (winkelv0BM)
+while winkelv0GRAD >360:
+	winkelv0GRAD=winkelv0GRAD-360
+
+winkelv0BM = (2*math.pi)/360*winkelv0GRAD
+#print("winkel GRAD nach while = "+str(winkelGRADv0)+"\nwinkel Bogenmass = "+str(winkelBGNMv0)+"\n")
+
 print("\n\n")
 #Zerlegung der Startgeschwindigkeit in x und y Komponente
-if (winkelv0==0):
+if (winkelv0BM==0):
 	vx[0]=v0
 	vy[0]=0
 else:
-	vx[0] = v0*math.cos(winkelv0)
-	vy[0] = v0*math.sin(winkelv0)
+	vx[0] = v0*math.cos(winkelv0BM)
+	vy[0] = v0*math.sin(winkelv0BM)
 
 #Bestimmung des Startpunktes durch Radius der Erde und winkelv0
-if (winkelv0==0):
+if (winkelv0BM==0):
 	PRx[0]=rE
 	PRy[0]=0
 else:
-	PRx[0] = rE*math.cos(winkelv0)
-	PRy[0] = rE*math.sin(winkelv0)
+	PRx[0] = rE*math.cos(winkelv0BM)
+	PRy[0] = rE*math.sin(winkelv0BM)
 
 
 aR,aRx[0],aRy[0],FRES[0],FRx[0],FRy[0],rER,rMR = getbeschl(PRx[0],PRy[0],PMx,PMy)
@@ -124,8 +132,8 @@ for i in range(1,n,1):
 	aR,aRx[i-1],aRy[i-1],FRES[i-1],FRx[i-1],FRy[i-1],rER,rMR = getbeschl(PRx[i-1],PRy[i-1],PMx,PMy)
 	print("FRES = ", FRES[i-1],"\naR = ",aR)
 
-	#k berechnet x 
-	#l berechnet v
+	#k berechnet Punkt 
+	#l berechnet Geschwindigkeit
 	#kräfte bei zwischenschritten als Unterprogramm
 	
 	kx1 = vx[i-1]
@@ -153,7 +161,8 @@ for i in range(1,n,1):
 	PRy[i] = PRy[i-1]+ h/6 * (ky1 + 2 * ky2 + 2* ky3 + ky4)
 	vx[i] = vx[i-1]+ ((h/6) * (lx1 + 2 * lx2 + 2* lx3 + lx4))
 	vy[i] = vy[i-1]+ ((h/6) * (ly1 + 2 * ly2 + 2* ly3 + ly4))
-	aR,aRx[i-1],aRy[i-1],FRES[i-1],FRx[i-1],FRy[i-1],rER,rMR = getbeschl(PRx[i-1],PRy[i-1],PMx,PMy)
+	aR,aRx[i],aRy[i],FRES[i],FRx[i],FRy[i],rER,rMR = getbeschl(PRx[i],PRy[i],PMx,PMy)
+	#aR,aRx[i-1],aRy[i-1],FRES[i-1],FRx[i-1],FRy[i-1],rER,rMR = getbeschl(PRx[i-1],PRy[i-1],PMx,PMy)  NOTIZ: ist diese Zeile oder die darüber richtig?
 	
 	print("DURCHGANG NUMMER: ", i)
 	#if (rER<=rE-1):
@@ -168,3 +177,4 @@ for i in range(1,n,1):
 	#force.write(str(FRx[i-1])+"\t"+str(FRy[i-1])+"\n")
 
 ausg.close()
+
