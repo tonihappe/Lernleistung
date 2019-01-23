@@ -1,9 +1,10 @@
 {
   "ExpandedNodes": [
     "",
-    "\\nurX",
-    "\\XundY"
+    "\\Programme",
+    "\\Programme\\nurX",
+    "\\Programme\\XundY"
   ],
-  "SelectedNode": "\\nurX\\Besondere_Lernleistung_NUR_X.py",
+  "SelectedNode": "\\Programme\\nurX\\Besondere_Lernleistung_NUR_X.py",
   "PreviewInSolutionExplorer": false
 }
