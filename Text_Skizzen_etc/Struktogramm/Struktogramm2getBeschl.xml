@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<struktogramm fontfamily="83;101;114;105;102;" fontstyle="0" fontsize="15">
+  <strelem typ="0" zx="0" zy="0" textcolor="-16777216" bgcolor="-1">
+    <text>109;77;32;61;32;55;46;51;52;57;101;50;50;32;</text>
+    <text>109;69;32;61;32;53;46;57;55;50;101;50;52;32;</text>
+    <text>109;82;32;61;32;53;48;48;48;</text>
+    <text>71;32;61;32;54;46;54;55;52;48;56;101;45;49;49;</text>
+    <text>114;69;77;32;61;32;51;56;52;52;101;53;</text>
+  </strelem>
+  <strelem typ="0" zx="0" zy="0" textcolor="-16777216" bgcolor="-1">
+    <text>70;69;32;61;45;49;42;71;42;109;82;42;109;69;47;40;80;82;42;42;50;41;</text>
+  </strelem>
+  <strelem typ="0" zx="0" zy="0" textcolor="-16777216" bgcolor="-1">
+    <text>70;77;32;61;32;71;42;109;82;42;109;77;47;40;40;114;69;77;45;80;82;41;42;42;50;41;</text>
+  </strelem>
+  <strelem typ="0" zx="0" zy="0" textcolor="-16777216" bgcolor="-1">
+    <text>70;82;69;83;32;61;32;70;69;43;70;77;</text>
+  </strelem>
+  <strelem typ="0" zx="0" zy="0" textcolor="-16777216" bgcolor="-1">
+    <text>97;82;32;61;32;70;82;69;83;47;109;82;</text>
+  </strelem>
+  <strelem typ="7" zx="0" zy="0" textcolor="-16777216" bgcolor="-1">
+    <text>9;114;101;116;117;114;110;32;97;82;44;32;70;82;69;83;44;70;69;44;70;77;</text>
+  </strelem>
+</struktogramm>
+
