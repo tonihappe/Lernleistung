@@ -24,7 +24,7 @@ t=[0]*n #Zeit
 PR=[0]*n #Punt des Raumschiffes
 v=[0]*n #Geschwindigkeit des Raumschiffes
 
-rM = 3476e3 #Radius Mond m
+rM = 1737e3 #Radius Mond m
 rE = 6371e3 # Radius Erde m 
 rEM = 3844e5 #Abstand Erde-Mond
 
@@ -34,7 +34,7 @@ t[0]=0
 PR[0]=6371e3	# Startpunkt des Raumschiffs (Radius der Erde)
 
 print("Startgeschwindigkeit: ")
-v[0]=int(input()) #Eingabe der Startgeschwindigkeit
+v[0]=float(input()) #Eingabe der Startgeschwindigkeit
 print("\n\n")
 
 aR, FRES,FE,FM = getbeschl(PR[0])
@@ -64,8 +64,8 @@ for i in range(1,n,1):
 	lx4 = aR
 	
 	t[i] = t[i-1]+h
-	PR[i] = PR[i-1]+ h/6 * (kx1 + 2 * kx2 + 2* kx3 + kx4)
-	v[i] = v[i-1]+ ((h/6) * (lx1 + 2 * lx2 + 2* lx3 + lx4))
+	PR[i] = PR[i-1]+ h/6.0 * (kx1 + 2 * kx2 + 2* kx3 + kx4)
+	v[i] = v[i-1]+ ((h/6.0) * (lx1 + 2 * lx2 + 2* lx3 + lx4))
 	aR, FRES,FE,FM = getbeschl(PR[i-1])
 	
 	
@@ -79,7 +79,10 @@ for i in range(1,n,1):
 		break
 
 	#werte in datei
-	ausg.write(str(t[0])+"\t"+str(PR[0])+"\t"+str(v[0])+"\t"+str(aR)+"\t"+str(FRES)+"\t"+str(FE)+"\t"+str(FM)+"\n")
+	ausg.write(str(t[i])+"\t"+str(PR[i])+"\t"+str(v[i])+"\t"+str(aR)+"\t"+str(FRES)+"\t"+str(FE)+"\t"+str(FM)+"\n")
 	
 
 ausg.close()
+
+#Bremsvorgang mit reinbringe#
+#if anweisung ob lagrange --> Zündung bremsdüsen
