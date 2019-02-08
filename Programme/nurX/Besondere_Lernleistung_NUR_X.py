@@ -69,7 +69,7 @@ for i in range(1,n,1):
 	t[i] = t[i-1]+h
 	PR[i] = PR[i-1]+ h/6.0 * (k1 + 2 * k2 + 2* k3 + k4)
 	v[i]  = v[i-1] + h/6.0 * (l1 + 2 * l2 + 2* l3 + l4)
-	aR, FRES,FE,FM = getbeschl(PR[i-1])
+	#aR, FRES,FE,FM = getbeschl(PR[i-1])
 	
 	
 	print("DURCHGANG NUMMER: ", i)
