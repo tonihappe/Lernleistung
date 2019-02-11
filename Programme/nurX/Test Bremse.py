@@ -86,11 +86,11 @@ for i in range(1,n,1):
 	print("DURCHGANG NUMMER: ", i)
 	#Test ob Raumschiff Mond oder Erde erreicht hat
 	if (PR[i]<=rE):
-		print("Auf Erde aufgeschlagen!")
+		print("\n\n\n\n\n\n\n\n\n\n\n\n\nAuf Erde aufgeschlagen!")
 		break
 
 	elif(PR[i]>(rEM-rM)):
-		print("Auf Mond aufgeschlagen!")
+		print("\n\n\n\n\n\n\n\n\n\n\n\n\nAuf Mond aufgeschlagen!")
 		break
 		
 	if (math.fabs(FRES)<=0.1 and bremsantw==False):

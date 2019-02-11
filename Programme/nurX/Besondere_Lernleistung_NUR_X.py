@@ -35,7 +35,7 @@ rEM = 3844e5 #Abstand Erde-Mond
 t[0]=0
 PR[0]=6371e3	# Startpunkt des Raumschiffs (Radius der Erde)
 
-print("Startgeschwindigkeit: ")
+print("Startgeschwindigkeit (Punkt als Dezimaltrennzeichen): ")
 v[0]=float(input()) #Eingabe der Startgeschwindigkeit
 print("\n\n")
 
@@ -75,27 +75,12 @@ for i in range(1,n,1):
 	print("DURCHGANG NUMMER: ", i)
 	#Test ob Raumschiff Mond oder Erde erreicht hat
 	if (PR[i]<=rE):
-		print("Auf Erde aufgeschlagen!")
+		print("\n\n\n\n\n\n\n\n\n\n\n\n\nAuf Erde aufgeschlagen!")
 		break
 
 	elif(PR[i]>(rEM-rM)):
-		print("Auf Mond aufgeschlagen!")
+		print("\n\n\n\n\n\n\n\n\n\n\n\n\nAuf Mond aufgeschlagen!")
 		break
-		
-	#if (math.fabs(FRES)<=0.1 and bremsantw==False):
-	#	print ("LAGRANGEPUNKT ERREICHT\n Soll der Bremsvorgang eingeleitet werden?\n\n[1] für Ja\n[2] für Nein\n")
-	#	bremsen=int(input())
-		
-	#	while (bremsen <= 0 or bremsen >= 3):#Falls ein ungültiger Wert eingegeben wurde wird diese Schleife ausgeführt
-	#		print("Bitte geben Sie [1] oder [2] ein!")
-	#		bremsen=int(input())
-
-	#	bremsantw=True # wird auf True gesetzt, damit nicht erneut gefragt wird, falls bereits geantwortet wurde
-
-	
-
-	#if (lagrinp==1):
-
 	
 	#werte in datei
 	ausg.write(str(t[i])+"\t"+str(PR[i])+"\t"+str(v[i])+"\t"+str(aR)+"\t"+str(FRES)+"\t"+str(FE)+"\t"+str(FM)+"\n")
