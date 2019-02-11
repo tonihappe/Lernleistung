@@ -1,58 +1,56 @@
 import math
 
-def getbeschl(PR):
-	mM = 7.349e22 #in kg
-	mE = 5.972e24 #in kg
-	mR = 5000 #in kg
-	G = 6.67408e-11 #in m^3/s^2kg; Gravitationskonstante
-	rEM = 3844e5 #in m; Abstand Erde-Mond
+def getBeschl(PR):
+	mM = 7.349e22				#in kg
+	mE = 5.972e24				#in kg
+	mR = 5000					#in kg
+	G = 6.67408e-11				#in m^3/s^2kg; Gravitationskonstante
+	rEM = 3844e5				#in m; Abstand Erde-Mond
 
 	#Berechnung der Kräfte und der Beschleunigung
-	FE =-1*G*mR*mE/(PR**2) #negativ, da die Erde auf der x-Achse "hinter" dem Raumschiff liegt
-	FM = G*mR*mM/((rEM-PR)**2) 
-	FRES = FE+FM #resultierende Kraft auf das Raumschiff
-	aR = (FRES/mR) #resultierende Beschleunigung
+	FE =-1*G*mR*mE/(PR**2)		#Gravitationskraft Erde, N
+	FM = G*mR*mM/((rEM-PR)**2)	#Gravitationskraft Mond, N
+	FRES = FE+FM				#resultierende Kraft, N
+	aR = (FRES/mR)				#resultierende Beschleunigung, m/s^2
 
 	return aR, FRES,FE,FM
 
 
-#deklarationen/initialisierungen
-n= 1000000 #Anzahl an maximalen Wiederholungen
-h = 1 #Schrittweite
+#Deklarationen
+n= 1000000			#Anzahl an maximalen Wiederholungen
+h = 1				#Schrittweite
 
-t=[0]*n #Zeit
-PR=[0]*n #Punt des Raumschiffes
-v=[0]*n #Geschwindigkeit des Raumschiffes
+t=[0]*n				#Zeit, s
+PR=[0]*n			#Position des Raumschiffes, m (Entfernung vom Erdmittelpunkt)
+v=[0]*n				#Geschwindigkeit des Raumschiffes, m/s
 
-rM = 1737e3 #Radius Mond m
-rE = 6371e3 # Radius Erde m 
-rEM = 3844e5 #Abstand Erde-Mond
-
-#bremsantw=bool(False)
-
+rM = 1737e3			#Mondradius, m
+rE = 6371e3			#Erdradius, m 
+rEM = 3844e5		#Abstand Erde-Mond, m
 
 #Anfangswerte
-t[0]=0
-PR[0]=6371e3	# Startpunkt des Raumschiffs (Radius der Erde)
+t[0]=0			#Anfang der "Zeitzählung" auf 0 setzen
+PR[0]=6371e3	#Startposition des Raumschiffs (Auf Erdoberfläche --> Radius der Erde)
 
+#Eingabe der Startgeschwindigkeit
 print("Startgeschwindigkeit (Punkt als Dezimaltrennzeichen): ")
-v[0]=float(input()) #Eingabe der Startgeschwindigkeit
+v[0]=float(input()) 
 print("\n\n")
 
-aR, FRES,FE,FM = getbeschl(PR[0])
+#Berechnungen für die Anfangswerte
+aR, FRES,FE,FM = getBeschl(PR[0]) #Erster Aufruf des Unterprogramms "getbeschl"
 ausg = open ("Ausgabe.dat","w")
-ausg.write(str(t[0])+"\t"+str(PR[0])+"\t"+str(v[0])+"\t"+str(aR)+"\t"+str(FRES)+"\t"+str(FE)+"\t"+str(FM)+"\n") #Anfangswerte in die Datei schreiben
+ausg.write(str(t[0])+"\t"+str(PR[0])+"\t"+str(v[0])+"\t"+str(aR)+"\t"+str(FRES)+"\t"+str(FE)+"\t"+str(FM)+"\n") #Ergebnisse des ersten Aufrufs in die Datei schreiben
 
 #Schleife für einzelne Berechnung am jeweiligen Punkt
 for i in range(1,n,1):
-	aR, FRES,FE,FM =getbeschl(PR[i-1])
-	print("FRES = ", FRES,"\naR = ",aR)
+	aR, FRES,FE,FM =getBeschl(PR[i-1])
+	#print("FRES = ", FRES,"\naR = ",aR)
 
-	#k berechnet x 
-	#l berechnet v
-	#kräfte bei zwischenschritten als Unterprogramm
-	
 	#RungeKutta4
+
+	#k berechnet PR
+	#l berechnet v
 	
 	k1 = v[i-1]
 	l1 = aR
@@ -65,26 +63,29 @@ for i in range(1,n,1):
 
 	k4 = v[i-1]+ h * l3
 	l4 = aR
-
+	
+	PR[i] = PR[i-1]+ h/6.0 * (k1 + 2 * k2 + 2* k3 + k4) #Berechnen der neuen Position
+	v[i]  = v[i-1] + h/6.0 * (l1 + 2 * l2 + 2* l3 + l4) #Berechnen der neuen Geschwindigkeit
 	t[i] = t[i-1]+h
-	PR[i] = PR[i-1]+ h/6.0 * (k1 + 2 * k2 + 2* k3 + k4)
-	v[i]  = v[i-1] + h/6.0 * (l1 + 2 * l2 + 2* l3 + l4)
-	#aR, FRES,FE,FM = getbeschl(PR[i-1])
 	
-	
-	print("DURCHGANG NUMMER: ", i)
+	#print("DURCHGANG NUMMER: ", i)
 	#Test ob Raumschiff Mond oder Erde erreicht hat
 	if (PR[i]<=rE):
-		print("\n\n\n\n\n\n\n\n\n\n\n\n\nAuf Erde aufgeschlagen!")
+		print("\n\n\n\n\nAuf Erde aufgeschlagen!\n\n")
+		print("Verstrichene  Durchgänge: "+str(i)+"\n")
+		ausg.close()
 		break
 
 	elif(PR[i]>(rEM-rM)):
-		print("\n\n\n\n\n\n\n\n\n\n\n\n\nAuf Mond aufgeschlagen!")
+		print("\n\n\n\n\nAuf Mond aufgeschlagen!\n\n")
+		print("Verstrichene  Durchgänge: "+str(i)+"\n")
+		ausg.close()
 		break
 	
 	#werte in datei
 	ausg.write(str(t[i])+"\t"+str(PR[i])+"\t"+str(v[i])+"\t"+str(aR)+"\t"+str(FRES)+"\t"+str(FE)+"\t"+str(FM)+"\n")
-	
+
+print("\n\n\n\n\nMaximale Anzahl an Durchgängen überschritten! (>1000000)")
 
 ausg.close()
 
