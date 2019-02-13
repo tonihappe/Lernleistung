@@ -74,18 +74,19 @@ for i in range(1,n,1):
 		print("\n\n\n\n\nAuf Erde aufgeschlagen!\n\n")
 		print("Verstrichene  Durchgänge: "+str(i)+"\n")
 		ausg.close()
+		abbruch=bool(True)
 		break
 
 	elif(PR[i]>(rEM-rM)):
 		print("\n\n\n\n\nAuf Mond aufgeschlagen!\n\n")
 		print("Verstrichene  Durchgänge: "+str(i)+"\n")
 		ausg.close()
+		abbruch=bool(True)
 		break
 	
 	#werte in datei
 	ausg.write(str(t[i])+"\t"+str(PR[i])+"\t"+str(v[i])+"\t"+str(aR)+"\t"+str(FRES)+"\t"+str(FE)+"\t"+str(FM)+"\n")
 
-print("\n\n\n\n\nMaximale Anzahl an Durchgängen überschritten! (>1000000)")
-
-ausg.close()
-
+if (abbruch==False):
+	print("\n\n\n\n\nMaximale Anzahl an Durchgängen überschritten! (>1000000)")
+	ausg.close()
