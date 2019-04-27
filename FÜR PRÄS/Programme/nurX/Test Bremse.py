@@ -116,3 +116,5 @@ ausg.close()
 
 #Bremsvorgang mit reinbringe#
 #if anweisung ob lagrange --> Zündung bremsdüsen
+
+#ARbeit als F*s (nicht so ganz weil es eigentlich nicht konstant ist aber es wird immer wieder wiederholt)
