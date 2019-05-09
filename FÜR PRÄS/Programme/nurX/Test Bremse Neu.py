@@ -18,7 +18,7 @@ def getBeschl(PR):
 def BremsbeschlLagr(PR,v):
 	rEM = 3844e5
 	rverbleib=rEM-PR
-	aBremse=-1*(v**2/rverbleib)
+	aBremse=-1*(v**2/(2*rverbleib))
 	return aBremse
 	
 
@@ -51,6 +51,10 @@ aR, FRES,FE,FM = getBeschl(PR[0]) #Erster Aufruf des Unterprogramms "getbeschl"
 ausg = open ("Ausgabe.dat","w")
 ausg.write(str(t[0])+"\t"+str(PR[0])+"\t"+str(v[0])+"\t"+str(aR)+"\t"+str(FRES)+"\t"+str(FE)+"\t"+str(FM)+"\n") #Ergebnisse des ersten Aufrufs in die Datei schreiben
 
+#Nur zur Fehleranalyse
+bremskraefte = open ("Bremse.dat","w")
+
+
 #Schleife für einzelne Berechnung am jeweiligen Punkt
 for i in range(1,n,1):
 	aR, FRES,FE,FM =getBeschl(PR[i-1])
@@ -58,8 +62,14 @@ for i in range(1,n,1):
 
 	if (bremseing==1):
 		aGesamtBrems = (-1*aR) + aBremsLagr
-		print(str(aGesamtBrems)+"\n")
+		print(str(aGesamtBrems)+"                                 ")
+		aR=aGesamtBrems-(0.2*aGesamtBrems)
+		
+		rverbleib=rEM-PR[i-1]
+		print ("RVERBLEIB: "+str(rverbleib)+"\n")
+		bremskraefte.write (str(t[i-1])+"\t"+str(aR)+"\t"+str(aGesamtBrems)+"\t"+str(aBremsLagr)+"\t"+str(vLagrange)+"\n")
 		aR=aGesamtBrems
+
 	else:
 		aGesamtBrems = 0
 
@@ -95,7 +105,7 @@ for i in range(1,n,1):
 
 	elif(PR[i]>(rEM-rM)):
 		print("\n\n\n\n\nAuf Mond aufgeschlagen!\n\n")
-		print("Verstrichene  Durchgänge: "+str(i)+"\nRestgeschwindigkeit: "+str(v[i])+"\nvLagrange: "+str(vLagrange)+"\n")
+		print("Verstrichene  Durchgänge: "+str(i)+"\nRestgeschwindigkeit: "+str(v[i])+"\nvLagrange: "+str(vLagrange)+"\nrLagrMond "+str(rLagrMond)+"\n")
 		ausg.close()
 		abbruch=bool(True)
 		break
@@ -117,6 +127,9 @@ for i in range(1,n,1):
 		if (bremseing==1):
 			aBremsLagr= BremsbeschlLagr(PR[i],v[i]) #Bremsbeschleunigung die benötigt wäre um die Geschwindigkeit die am Lagrangepunkt besteht zur Mondoberfläche auf null zu reduzieren
 			vLagrange=v[i]
+		if (bremseing==2):
+			vLagrange=v[i]
+			rLagrMond=rEM - PR[i]
 
 
 
@@ -125,3 +138,4 @@ for i in range(1,n,1):
 if (abbruch==False):
 	print("\n\n\n\n\nMaximale Anzahl an Durchgängen überschritten! (>1000000)")
 	ausg.close()
+	bremskraefte.close()
