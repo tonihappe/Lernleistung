@@ -16,8 +16,9 @@ def getBeschl(PR):
 	return aR, FRES,FE,FM
 
 def BremsbeschlLagr(PR,v):
-	rEM = 3844e5
-	rverbleib=rEM-PR
+	rEM = 3844e5 
+	rM = 1737e3	
+	rverbleib=rEM-PR-rM
 	aBremse=-1*(v**2/(2*rverbleib))
 	return aBremse
 	
@@ -63,12 +64,13 @@ for i in range(1,n,1):
 	if (bremseing==1):
 		aGesamtBrems = (-1*aR) + aBremsLagr
 		print(str(aGesamtBrems)+"                                 ")
-		aR=aGesamtBrems-(0.2*aGesamtBrems)
 		
-		rverbleib=rEM-PR[i-1]
+		
+		rverbleib=rEM-PR[i-1]-rM
 		print ("RVERBLEIB: "+str(rverbleib)+"\n")
-		bremskraefte.write (str(t[i-1])+"\t"+str(aR)+"\t"+str(aGesamtBrems)+"\t"+str(aBremsLagr)+"\t"+str(vLagrange)+"\n")
-		aR=aGesamtBrems
+		bremskraefte.write (str(t[i-1])+"\t"+str(aR)+"\t"+str(aGesamtBrems)+"\t"+str(aBremsLagr)+"\t"+str(vLagrange)+"\t"+str(rverbleib)+"\n")
+		
+		aR=aGesamtBrems-(0.1*aGesamtBrems)
 
 	else:
 		aGesamtBrems = 0
@@ -127,9 +129,10 @@ for i in range(1,n,1):
 		if (bremseing==1):
 			aBremsLagr= BremsbeschlLagr(PR[i],v[i]) #Bremsbeschleunigung die benötigt wäre um die Geschwindigkeit die am Lagrangepunkt besteht zur Mondoberfläche auf null zu reduzieren
 			vLagrange=v[i]
+			rLagrMond=rEM - PR[i] -rM
 		if (bremseing==2):
 			vLagrange=v[i]
-			rLagrMond=rEM - PR[i]
+			rLagrMond=rEM - PR[i] -rM
 
 
 
