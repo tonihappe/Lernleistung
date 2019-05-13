@@ -1,4 +1,5 @@
 import math
+import numpy
 
 def getBeschl(PR):
 	mM = 7.349e22				#in kg
@@ -22,14 +23,14 @@ def BremsbeschlLagr(PR,v):
 	aBremse=-1*(v**2/(2*rverbleib))
 	return aBremse
 
-def getL1():
+def getL1(PR):
 	mM = 7.349e22				#in kg
 	mE = 5.972e24				#in kg
 	rEM = 3844e5				#in m; Abstand Erde-Mond
 	
 	rL1=(-1)*((rEM*math.sqrt(mM*mE)-rEM*mE)/(mE-mM))
-	
-	return rL1
+	rRL1=rL1-PR
+	return rL1,rRL1
 
 #Deklarationen
 n= 1000000			#Anzahl an maximalen Wiederholungen
@@ -106,6 +107,8 @@ for i in range(1,n,1):
 	v[i]  = v[i-1] + h/6.0 * (l1 + 2 * l2 + 2* l3 + l4) #Berechnen der neuen Geschwindigkeit
 	t[i] = t[i-1]+h
 	
+	rRL1=rL1-PR[i]
+
 	#print("DURCHGANG NUMMER: ", i)
 	#Test ob Raumschiff Mond oder Erde erreicht hat
 	if (PR[i]<=rE):
@@ -126,7 +129,7 @@ for i in range(1,n,1):
 	ausg.write(str(t[i])+"\t"+str(PR[i])+"\t"+str(v[i])+"\t"+str(aR)+"\t"+str(FRES)+"\t"+str(FE)+"\t"+str(FM)+"\n")
 
 	#BREMSVORGANG
-	if (math.fabs(FRES)<=0.1 and bremsantw==False):
+	if (math.fabs(rRL1)<=100 and bremsantw==False):
 		print ("LAGRANGEPUNKT ERREICHT\n Soll der Bremsvorgang eingeleitet werden?\n1 für Ja\n2 für Nein\n")
 		bremseing=int(input())
 		
