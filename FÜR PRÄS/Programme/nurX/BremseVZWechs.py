@@ -18,7 +18,7 @@ def getBeschl(PR):
 def BremsbeschlLagr(PR,v):
 	rEM = 3844e5 
 	rM = 1737e3	
-	rverbleib=rEM-PR-rM
+	rverbleib=rEM-PR-rM+8000
 	aBremse=-1*(v**2/(2*rverbleib))
 	return aBremse
 
@@ -81,11 +81,14 @@ for i in range(1,n,1):
 	#print("FRES = ", FRES,"\naR = ",aR)
 	
 	if (bremseing==1):
-		aGesamtBrems = (-1*aR) + aBremsLagr
+		rverbleib=rEM-PR[i-1]-rM
+		if (rverbleib<=9000):
+			aGesamtBrems = (-1*aR*0.5) + aBremsLagr
+		else:
+			aGesamtBrems = (-1*aR) + aBremsLagr
+
 		print(str(aGesamtBrems)+"                                 ")
 		
-		
-		rverbleib=rEM-PR[i-1]-rM
 		print ("RVERBLEIB: "+str(rverbleib)+"\n")
 		bremskraefte.write (str(t[i-1])+"\t"+str(aR)+"\t"+str(aGesamtBrems)+"\t"+str(aBremsLagr)+"\t"+str(vLagrange)+"\t"+str(rverbleib)+"\n")
 		
