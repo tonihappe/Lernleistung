@@ -39,6 +39,7 @@ def getL1(PR):
 	
 	rL1=(-1)*((rEM*math.sqrt(mM*mE)-rEM*mE)/(mE-mM))
 	rRL1=rL1-PR
+	
 	return rL1,rRL1
 
 #Deklarationen
